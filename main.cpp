@@ -7,19 +7,25 @@
 // **Prefer using the code in the example_sdl2_opengl3/ folder**
 // See imgui_impl_sdl2.cpp for details.
 
+#include "Mem.hpp"
 #include "imgui.h"
 #include "imgui_impl_sdl2.h"
 #include "imgui_impl_opengl2.h"
 #include <stdio.h>
 #include <SDL.h>
 #include <SDL_opengl.h>
+#include <vector>
 
+#include "LLE.hpp"
+
+#include "ui/imgui_memory_editor.h"
 #include "ui/imgui_user_viewport.h"
 #include "ui/X86DebuggerWindow.h"
 
 // Main code
 int main(int, char**)
 {
+    
     // Setup SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
     {
@@ -76,7 +82,17 @@ int main(int, char**)
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+
+    /*(INIT EMULATOR)*/
+    // load bios
+    if (!x86emul::LLE::LoadBios("BIOS/W27C512 BIOS AWARD 3262446.BIN", 0xF0000, 64 * 1024, 0, 0)) {
+        exit(1);
+    }
+
+
     // Main loop
+    static std::vector<MemoryEditor> memEditors;
+    memEditors.resize(x86emul::gMemoryMap.map.size());
     bool done = false;
     while (!done)
     {
@@ -103,6 +119,11 @@ int main(int, char**)
 
         gVGAOutputWindow.Draw();
         gX86DebuggerWindow.Draw();
+
+        // Draw memory editors
+        for (int i =0; i < x86emul::gMemoryMap.map.size(); i++) {
+            memEditors[i].DrawWindow(x86emul::gMemoryMap.map[i].name, &x86emul::gMemoryMap.map[i].data[0], x86emul::gMemoryMap.map[i].size, x86emul::gMemoryMap.map[i].start);
+        }
 
         // Rendering
         ImGui::Render();
