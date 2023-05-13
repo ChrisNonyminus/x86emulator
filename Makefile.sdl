@@ -18,7 +18,7 @@ CC = clang
 EXE = x86.bin
 IMGUI_DIR = imgui
 SOURCES = main.cpp 
-SOURCES += Application.cpp LLE.cpp Mem.cpp
+SOURCES += Application.cpp LLE.cpp Mem.cpp CPU.cpp
 
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl2.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl2.cpp

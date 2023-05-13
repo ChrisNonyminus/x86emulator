@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ios>
 #include <vector>
 #include <string>
 #include <string_view>
@@ -65,9 +66,14 @@ inline bool Combo(const char* label, int* curr, const std::vector<std::string>& 
 }
 
 template <class A1>
-std::string Format(std::string_view fmt, A1&& arg)
+std::string Format(std::string fmt, A1&& arg)
 {
 	//todo
+	if (fmt == "{X}") {
+		char f[128];
+		sprintf(f, "0x%08X", arg);
+		return f;
+	}
 	if (fmt.front() == '{' && fmt.back() == '}')
 	{
 		if constexpr (std::is_same_v<std::remove_reference_t<A1>, std::string>)

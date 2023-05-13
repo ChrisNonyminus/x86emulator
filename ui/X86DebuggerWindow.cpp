@@ -3,6 +3,9 @@
 
 #include "X86DebuggerWindow.h"
 
+#include "../CPU.hpp"
+#include "imrad.h"
+
 X86DebuggerWindow gX86DebuggerWindow;
 
 
@@ -76,7 +79,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.EIP).c_str());
             /// @end Text
 
             /// @begin Text
@@ -86,7 +89,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_EAX()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -96,7 +99,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_EBX()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -106,7 +109,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_ECX()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -116,7 +119,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_EDX()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -126,7 +129,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_ESP()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -136,7 +139,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_EBP()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -146,7 +149,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_ESI()).c_str());
             /// @end Text
 
             /// @begin Text
@@ -156,7 +159,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::REG_EDI()).c_str());
             /// @end Text
 
 
