@@ -39,7 +39,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.CS).c_str());
             /// @end Text
 
             /// @begin Text
@@ -49,7 +49,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.ES).c_str());
             /// @end Text
 
             /// @begin Text
@@ -59,7 +59,7 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.SS).c_str());
             /// @end Text
 
             /// @begin Text
@@ -69,7 +69,27 @@ void X86DebuggerWindow::Draw()
 
             /// @begin Text
             ImGui::TableNextColumn();
-            ImRad::AlignedText(ImRad::Align_Left, "[insert value here]");
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.DS).c_str());
+            /// @end Text
+
+            /// @begin Text
+            ImGui::TableNextColumn();
+            ImRad::AlignedText(ImRad::Align_Left, "FS");
+            /// @end Text
+
+            /// @begin Text
+            ImGui::TableNextColumn();
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.FS).c_str());
+            /// @end Text
+
+            /// @begin Text
+            ImGui::TableNextColumn();
+            ImRad::AlignedText(ImRad::Align_Left, "GS");
+            /// @end Text
+
+            /// @begin Text
+            ImGui::TableNextColumn();
+            ImRad::AlignedText(ImRad::Align_Left, ImRad::Format("{X}", x86emul::gRegisters.GS).c_str());
             /// @end Text
 
             /// @begin Text

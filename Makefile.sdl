@@ -12,13 +12,15 @@
 #
 
 #CXX = g++
-CXX = clang++
-CC = clang
+CXX = ccache clang++
+CC = ccache clang
 
 EXE = x86.bin
 IMGUI_DIR = imgui
 SOURCES = main.cpp 
 SOURCES += Application.cpp LLE.cpp Mem.cpp CPU.cpp
+
+SOURCES += drc/IEmitter.cpp drc/TinyCCEmitter.cpp
 
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
 SOURCES += $(IMGUI_DIR)/backends/imgui_impl_sdl2.cpp $(IMGUI_DIR)/backends/imgui_impl_opengl2.cpp
@@ -42,7 +44,7 @@ LIBS =
 
 ifeq ($(UNAME_S), Linux) #LINUX
 	ECHO_MESSAGE = "Linux"
-	LIBS += -lGL -ldl `sdl2-config --libs`
+	LIBS += -lGL -ldl `sdl2-config --libs` -Ldrc/tinycc -ltcc -ltcc1
 
 	CXXFLAGS += `sdl2-config --cflags`
 	CFLAGS = $(CXXFLAGS)
@@ -50,7 +52,7 @@ endif
 
 ifeq ($(UNAME_S), Darwin) #APPLE
 	ECHO_MESSAGE = "Mac OS X"
-	LIBS += -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo `sdl2-config --libs`
+	LIBS += -framework OpenGL -framework Cocoa -framework IOKit -framework CoreVideo `sdl2-config --libs` -Ldrc/tinycc -ltcc -ltcc1
 	LIBS += -L/usr/local/lib -L/opt/local/lib
 
 	CXXFLAGS += `sdl2-config --cflags`
@@ -60,7 +62,7 @@ endif
 
 ifeq ($(OS), Windows_NT)
 	ECHO_MESSAGE = "MinGW"
-	LIBS += -lgdi32 -lopengl32 -limm32 `pkg-config --static --libs sdl2`
+	LIBS += -lgdi32 -lopengl32 -limm32 `pkg-config --static --libs sdl2` -Ldrc/tinycc -ltcc -ltcc1
 
 	CXXFLAGS += `pkg-config --cflags sdl2`
 	CFLAGS = $(CXXFLAGS)
@@ -82,11 +84,15 @@ endif
 %.o:$(IMGUI_DIR)/backends/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
-all: $(EXE)
+all: tinycc $(EXE)
 	@echo Build complete for $(ECHO_MESSAGE)
 
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LIBS)
+
+tinycc:
+	$(cd ./drc/tinycc && && chmod +x ./configure && ./configure)
+	make -C ./drc/tinycc
 
 clean:
 	rm -f $(EXE) $(OBJS)
